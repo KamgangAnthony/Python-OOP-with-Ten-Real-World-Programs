@@ -31,10 +31,18 @@ class WarCardGame:
         computer_card = self._computer.draw_card()
 
         print(f"Your Card: ")
-        player_card.show()
+        if player_card:
+            player_card.show()
+        else:
+            self.check_game_over()
+            return
 
         print(f"\nComputer Card: ")
-        computer_card.show()
+        if computer_card:
+            computer_card.show()
+        else:
+            self.check_game_over()
+            return
 
         winner = self.get_round_winner(player_card, computer_card)
         cards_won = self.get_cards_won(player_card, computer_card, cards_from_war)
@@ -97,13 +105,12 @@ class WarCardGame:
 
         elif self._computer.has_empty_deck():
             print("=================================")
-            print("|           Game Over           |")
+            print("|     Well played !!!!!         |")
             print("=================================")
             print(f"Excellent. You won, {self._player.name}! Congratulations.")
             return True
         else:
             return False
-
 
     def print_stats(self):
         print("\n----")
@@ -115,4 +122,3 @@ class WarCardGame:
         print("==========================")
         print("|    War Card Game       |")
         print("==========================")
-
