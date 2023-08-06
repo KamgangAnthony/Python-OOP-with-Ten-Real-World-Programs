@@ -1,0 +1,25 @@
+Title : Math painter App
+
+Description : An app that gets as input the dimensions(width and
+height) of a rectangle canvas. Then the canvas color, either
+white or black, then ask the user what shape
+he would like to draw rectangle or square?
+Then the starting coordinates of the shape(x and y).
+Then the width and height of the shape.
+Then the amount of red, green, and blue the shape requires.
+
+Then ask back what the user would like to draw.
+When the user presses 'quit', a canvas.png file is generated with
+the images the user asked inside the rectangle canvas with
+the right colors
+
+Objects :
+- App
+- Canvas(attributes: int width, int height, str color_black_or_white |
+         methods: send_data())
+- Shape(str type, StartingCoordinates starting_coordinates,
+int width, int height, ColorRGB color_rgb |
+         methods: add_shape_info_to_data())
+- StartingCoordinates(attributes: int x, int y)
+- ColorRGB(attributes: int R, int G, int B)
+- ImageDrawer(attributes: data | methods: export_the_image())

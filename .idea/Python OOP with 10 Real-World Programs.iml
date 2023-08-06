@@ -3,6 +3,7 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/Flatmate bills App" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Math Painter App" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.11 (Python OOP with 10 Real-World Programs)" jdkType="Python SDK" />
