@@ -1,8 +1,5 @@
 from canvas import Canvas
-from colorrgb import ColorRGB
-from imagedrawer import ImageDrawer
 from shape import Shape
-from startingcoordinates import StartingCoordinates
 
 
 def input_int(msg):
@@ -37,7 +34,7 @@ user_height = input_int("Enter canvas height: ")
 canvas_color = input_canvas_color("Enter canvas color (white or black): ")
 
 our_canvas = Canvas(user_width, user_height, canvas_color)
-canvas_data = our_canvas.send_data()
+
 
 while True:
     shape = input("What do you like to draw (rectangle or square) ? Enter quit to quit. ")
@@ -58,13 +55,15 @@ while True:
     green_in_shape = input_int(f"How much green should the {shape} have? ")
     blue_in_shape = input_int(f"How much blue should the {shape} have? ")
 
-    our_starting_coordinates = StartingCoordinates(x_of_shape, y_of_shape)
-    our_colors = ColorRGB(red_in_shape, green_in_shape, blue_in_shape)
+    our_starting_coordinates = (x_of_shape, y_of_shape)
+    our_colors = (red_in_shape, green_in_shape, blue_in_shape)
     our_shape = Shape(shape, our_starting_coordinates, width_of_shape, height_of_shape, our_colors)
-    canvas_data = our_shape.add_shape_info_to_data(canvas_data)
+    canvas_data = our_shape.add_shape_info_to_data(our_canvas.data)
 
-image_exporter = ImageDrawer(canvas_data)
-image_exporter.export_the_image()
+our_canvas.export_the_image(our_canvas.data)
+
+# image_exporter = ImageDrawer(canvas_data)
+# image_exporter.export_the_image()
 
 # our_canvas = Canvas(123, 250, "white")
 # canvas_data = our_canvas.send_data()
