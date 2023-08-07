@@ -49,8 +49,14 @@ while True:
 
     x_of_shape = input_int(f"Enter x of the {shape}: ")
     y_of_shape = input_int(f"Enter y of the {shape}: ")
-    width_of_shape = input_int(f"Enter the width of the {shape}: ")
-    height_of_shape = input_int(f"Enter the height of the {shape}: ")
+
+    if shape == "square":
+        width_of_shape = input_int(f"Enter the side of the {shape}: ")
+        height_of_shape = width_of_shape
+    else:
+        width_of_shape = input_int(f"Enter the width of the {shape}: ")
+        height_of_shape = input_int(f"Enter the height of the {shape}: ")
+
     red_in_shape = input_int(f"How much red should the {shape} have? ")
     green_in_shape = input_int(f"How much green should the {shape} have? ")
     blue_in_shape = input_int(f"How much blue should the {shape} have? ")
@@ -58,7 +64,7 @@ while True:
     our_starting_coordinates = (x_of_shape, y_of_shape)
     our_colors = (red_in_shape, green_in_shape, blue_in_shape)
     our_shape = Shape(shape, our_starting_coordinates, width_of_shape, height_of_shape, our_colors)
-    canvas_data = our_shape.add_shape_info_to_data(our_canvas.data)
+    our_shape.add_shape_info_to_data(our_canvas)
 
 our_canvas.export_the_image(our_canvas.data)
 
