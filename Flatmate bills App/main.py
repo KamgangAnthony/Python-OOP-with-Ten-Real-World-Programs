@@ -1,5 +1,6 @@
 from PdfReport import PdfReport
 from bill import Bill
+from PdfReport import FileSharer
 
 from flatmate import Flatmate
 
@@ -18,3 +19,6 @@ flatmate2 = Flatmate(name_of_flatmate2, number_of_days_flatmate2_stayed)
 
 pdf_report = PdfReport(filename=f"{period}.pdf")
 pdf_report.generate(flatmate1, flatmate2, bill=the_bill)
+
+our_file_sharer = FileSharer(pdf_report.filename)
+print(our_file_sharer.share())
