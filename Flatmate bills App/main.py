@@ -1,24 +1,52 @@
-from PdfReport import PdfReport
-from bill import Bill
-from PdfReport import FileSharer
+from flask.views import MethodView
+from wtforms import Form, StringField, SubmitField
+from flask import Flask, render_template, request
+from flatmates_bill import bill, flatmate, PdfReport
 
-from flatmate import Flatmate
+app = Flask(__name__)
 
-amount = float(input("Hello beloved user. Enter the bill amount please "))
-period = input("During which period did that bill occur ? E.g November 2019 ")
+class HomePage(MethodView):
 
-name_of_flatmate1 = input("What is the name of the first flatmate ? ")
-number_of_days_flatmate1_stayed = int(input(f"How many days did {name_of_flatmate1} stay ? "))
+    def get(self):
+        return render_template('index.html')
 
-name_of_flatmate2 = input("What is the name of the second flatmate ? ")
-number_of_days_flatmate2_stayed = int(input(f"How many days did {name_of_flatmate2} stay ? "))
+class BillFormPage(MethodView):
 
-the_bill = Bill(amount, period)
-flatmate1 = Flatmate(name_of_flatmate1, number_of_days_flatmate1_stayed)
-flatmate2 = Flatmate(name_of_flatmate2, number_of_days_flatmate2_stayed)
+    def get(self):
+        bill_form = BillForm()
+        return render_template('bill_form_page.html', billform = bill_form)
 
-pdf_report = PdfReport(filename=f"{period}.pdf")
-pdf_report.generate(flatmate1, flatmate2, bill=the_bill)
 
-our_file_sharer = FileSharer(pdf_report.filename)
-print(our_file_sharer.share())
+
+class ResultsPage(MethodView):
+
+    def post(self):
+        billform = BillForm(request.form)
+
+        the_bill = bill.Bill(float(billform.amount.data), billform.period.data)
+        flatmate1 = flatmate.Flatmate(billform.name1.data, float(billform.days_in_house1.data))
+        flatmate2 = flatmate.Flatmate(billform.name2.data, float(billform.days_in_house2.data))
+
+        return render_template('results.html',
+                               name1 = flatmate1.name,
+                               amount1 = flatmate1.pays(the_bill),
+                               name2 = flatmate2.name,
+                               amount2 = flatmate2.pays(the_bill))
+
+class BillForm(Form):
+    amount = StringField("Bill Amount: ", render_kw={"placeholder": "E.g 500"})
+    period = StringField("Bill Period: ", render_kw={"placeholder": "E.g December 2020"})
+
+    name1 = StringField("Name: ", render_kw={"placeholder": "E.g John"})
+    days_in_house1 = StringField("Days in the house: ", render_kw={"placeholder": "E.g 50"})
+
+    name2 = StringField("Name: ", render_kw={"placeholder": "E.g Mary"})
+    days_in_house2 = StringField("Days in the house: ", render_kw={"placeholder": "E.g 25"})
+
+    button = SubmitField("Calculate")
+
+app.add_url_rule('/', view_func=HomePage.as_view('home_page'))
+app.add_url_rule('/bill_form', view_func=BillFormPage.as_view('bill_form_page'))
+app.add_url_rule('/results', view_func=ResultsPage.as_view('results_page'))
+
+app.run()

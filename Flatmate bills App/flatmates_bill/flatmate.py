@@ -14,8 +14,8 @@ class Flatmate:
         Flatmate.total_num_of_days += days_in_house
 
     def pays(self, bill):
-        month, year = bill.period.split()
-
-        num_days = calendar.monthrange(int(year), list(calendar.month_name).index(month))[1]
+        # month, year = bill.period.split()
+        #
+        # num_days = calendar.monthrange(int(year), list(calendar.month_name).index(month))[1]
 
         return round((self.days_in_house / self.total_num_of_days) * bill.amount, 2)
